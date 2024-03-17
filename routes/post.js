@@ -16,4 +16,19 @@ router.post('/register', async (req, res) => {
     }
 });
 
+router.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const user = await User.findOne({ where: { username } });
+    const validPassword = await bcrypt.compare(password, user.password);
+  
+    !user ? res.status(404).json({ message: 'User not found' }) : null;
+    !validPassword ? res.status(401).json({ message: 'Invalid password' }) : null;
+  
+    const token = jwt.sign({ userId: user.id }, 'your_jwt_secret');
+  
+    res.cookie('token', token, { httpOnly: true, secure: true });
+  
+    res.redirect('/home');
+  })
+
 module.exports = router;
