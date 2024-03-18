@@ -3,6 +3,7 @@ const router = express.Router();
 const { authenticateJWT, jwt } = require('../auth/auth');
 const bcrypt = require('bcrypt');
 const User = require('../db/tables/users');
+const Cards = require('../db/tables/cards');
 
 router.post('/register', async (req, res) => {
     const { username, password } = req.body;
@@ -30,5 +31,23 @@ router.post('/login', async (req, res) => {
   
     res.redirect('/home');
   })
+
+router.post('/createCard', authenticateJWT, (req, res) => {
+    const userId = req.user.userId;
+    console.log(userId);
+    Cards.create({ userId });
+    res.redirect('/home');
+    // You can now use the userId to associate the card with the user
+});
+
+router.post('/createTask', authenticateJWT, async (req, res) => {
+    console.log(req);
+    // try {
+    //     await card.createTask({ cardId, description });
+    //     res.redirect('/home');
+    // } catch (error) {
+    //     res.status(500).json({ message: 'Error creating task', error });
+    // }
+});
 
 module.exports = router;

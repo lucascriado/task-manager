@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.3/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Document</title>
+</head>
+
+<body class="bg-slate-900 h-screen">
+    <h1 class="text-4xl font-regular text-center text-white">Welcome to the home page</h1>
+    <div class="container mx-auto flex gap-[1rem] flex-wrap">
+        <% Cards.forEach(function(card) { %>
+            <div class="card w-96 bg-base-100 shadow-xl">
+                <div class="card-body">
+                    <ul>
+                        <div class="flex gap-[1rem]">
+                            <input type="checkbox" name="" id="">
+                            <li>sei la</li>
+                            <button type="submit" class="bg-red-600 text-white p-1 rounded-md">Delete</button>
+                        </div>
+                        <div class="flex gap-[1rem]">
+                            <input type="checkbox" name="" id="">
+                            <li>sei la</li>
+                            <button type="submit" class="bg-red-600 text-white p-1 rounded-md">Delete</button>
+                        </div>
+                    </ul>
+                    <div class="card-actions justify-end">
+                        <button class="btn" onclick="my_modal_4.showModal()">open modal</button>
+                    </div>
+                    <div class="card-actions justify-end">
+                        <button class="btn btn-primary">Delete</button>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+        <dialog id="my_modal_4" class="modal">
+            <div class="modal-box w-11/12 max-w-5xl">
+                <h3 class="font-bold text-lg">Hello!</h3>
+                <p class="py-4">Click the button below to close</p>
+                <div class="modal-action">
+                <form action="/createTask" method="post">
+                    <input class="input" type="text" name="description">
+                    <button class="btn" type="submit">Add</button>
+                </form>
+                <form method="dialog">
+                    <!-- if there is a button, it will close the modal -->
+                    <button class="btn">Close</button>
+                </form>
+                </div>
+            </div>
+        </dialog>
+        <div class="card w-96 h-24 bg-base-100 shadow-xl">
+            <div class="card-body">
+                <form action="/createCard" method="post">
+                    <button class="btn btn-primary" type="submit">Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- You can open the modal using ID.showModal() method -->
+
+    
+    <script>
+        function deletePost(id) {
+        if (id) {
+          fetch('/deletePost/' + id, { method: 'DELETE' })
+            .then(res => {
+              if (res) {
+                window.location.reload();
+              } else {
+                alert('Error deleting post');
+              }
+            });
+        }};
+        </script>
+</body>
+
+</html>

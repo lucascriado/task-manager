@@ -22,6 +22,6 @@ app.use(cookieParser());
 app.use('/', get);
 app.use('/', post);
 // app.use('/', put);
-// app.use('/', del)
+app.use('/', del)
 
 app.listen(9004);
